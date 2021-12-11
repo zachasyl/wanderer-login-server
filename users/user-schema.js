@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const userSchema = mongoose.Schema({
+  kind: String,
   username: String,
   password: String,
   email: String,
@@ -7,3 +8,4 @@ const userSchema = mongoose.Schema({
   lastName: String,
 }, {collection: 'users'});
 module.exports = userSchema;
+

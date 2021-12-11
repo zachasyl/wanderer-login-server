@@ -3,8 +3,8 @@ const userModel = require('./user-model');
 const findAllUsers = () =>
   userModel.find();
 
-const findUserById = (userId) =>
-  userModel.findById(userId);
+const findUserById = (id) =>
+  userModel.findById(id);
 
 const findByUsernameAndPassword = ({username, password}) =>
   userModel.findOne({username, password});
@@ -13,7 +13,8 @@ const findByUsername = ({username}) =>
   userModel.findOne({username});
 
 const createUser = (user) =>
-  userModel.create(user);
+    userModel.create(user);
+
 
 const updateUser = (user) =>
   userModel.updateOne({_id: user._id}, {

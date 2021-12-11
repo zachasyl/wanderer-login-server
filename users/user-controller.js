@@ -6,7 +6,7 @@ module.exports = (app) => {
       .then(users => res.json(users));
 
   const findUserById = (req, res) =>
-    userDao.findUserById(req.userId)
+    userDao.findUserById(req.params.id)
       .then(user => res.json(user));
 
   const deleteUser = (req, res) =>
@@ -57,5 +57,6 @@ module.exports = (app) => {
   app.put('/api/users', updateUser);
   app.delete('/api/users/:userId', deleteUser);
   app.get('/api/users', findAllUsers);
-  app.get('/api/users/:userId', findUserById);
+
+  app.get('/api/users/:id', findUserById);
 };
