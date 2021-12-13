@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const userSchema = require('./provider-schema');
+const providerSchema = require('./provider-schema');
 const providerModel = mongoose
-    .model('ProviderModel', userSchema);
+    .model('ProviderModel', providerSchema);
 module.exports = providerModel;

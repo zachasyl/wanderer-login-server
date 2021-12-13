@@ -1,28 +1,26 @@
-const userDao = require('./provider-dao');
+const providerDao = require('./provider-dao');
 
 module.exports = (app) => {
-    const findAllUsers = (req, res) =>
-        userDao.findAllUsers()
-            .then(users => res.json(users));
+    const findAllProviders = (req, res) =>
+        providerDao.findAllProviders()
+            .then(providers => res.json(providers));
 
-    const findUserById = (req, res) =>
-        userDao.findUserById(req.userId)
+    const findProviderById = (req, res) =>
+        providerDao.findProviderById(req.params.id)
             .then(user => res.json(user));
+    app.get("/api/providers/:id", findProviderById);
 
-    const deleteUser = (req, res) =>
-        userDao.deleteUser(req.params.userId)
-            .then(status => req.send(status));
 
-    const updateUser = (req, res) =>
-        userDao.updateUser(req.body)
-            .then(status => req.send(status));
+    const updateProvider = (req, res) =>
+        providerDao.updateProvider(req.params.id, req.body)
+            .then(status => res.send(status));
 
     const login = (req, res) => {
-        userDao.findByUsernameAndPassword(req.body)
-            .then(user => {
-                if(user) {
-                    req.session['profile'] = user;
-                    res.json(user);
+        providerDao.findByUsernameAndPassword(req.body)
+            .then(provider => {
+                if(provider) {
+                    req.session['profile'] = provider;
+                    res.json(provider);
                     return;
                 }
                 res.sendStatus(403);
@@ -30,13 +28,13 @@ module.exports = (app) => {
     }
 
     const register = (req, res) => {
-        userDao.findByUsername(req.body)
-            .then(user => {
-                if(user) {
+        providerDao.findByUsername(req.body)
+            .then(provider => {
+                if(provider) {
                     res.sendStatus(404);
                     return;
                 }
-                userDao.createUser(req.body)
+                providerDao.createProvider(req.body)
                     .then(user => {
                         req.session['profile'] = user;
                         res.json(user)
@@ -54,8 +52,8 @@ module.exports = (app) => {
     app.post('/api/register2', register);
     app.post('/api/profile', profile);
     app.post('/api/logout', logout);
-    app.put('/api/users', updateUser);
-    app.delete('/api/users/:userId', deleteUser);
-    app.get('/api/providers', findAllUsers);
-    app.get('/api/users/:userId', findUserById);
+    app.get('/api/providers', findAllProviders);
+    app.get('/api/providers/:id', findProviderById);
+    app.put('/api/providers/:id', updateProvider);
+
 };

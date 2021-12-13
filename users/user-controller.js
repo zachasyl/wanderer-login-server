@@ -1,62 +1,65 @@
 const userDao = require('./user-dao');
 
 module.exports = (app) => {
-  const findAllUsers = (req, res) =>
-    userDao.findAllUsers()
-      .then(users => res.json(users));
+    const findAllUsers = (req, res) =>
+        userDao.findAllUsers()
+            .then(users => res.json(users));
 
-  const findUserById = (req, res) =>
-    userDao.findUserById(req.params.id)
-      .then(user => res.json(user));
+    const findUserById = (req, res) =>
+        userDao.findUserById(req.params.id)
+            .then(user => res.json(user));
+    app.get("/api/users/:id", findUserById);
 
-  const deleteUser = (req, res) =>
-    userDao.deleteUser(req.params.userId)
-      .then(status => req.send(status));
 
-  const updateUser = (req, res) =>
-    userDao.updateUser(req.body)
-      .then(status => req.send(status));
+    const deleteUser = (req, res) =>
+        userDao.deleteUser(req.params.userId)
+            .then(status => req.send(status));
 
-  const login = (req, res) => {
-    userDao.findByUsernameAndPassword(req.body)
-      .then(user => {
-        if(user) {
-          req.session['profile'] = user;
-          res.json(user);
-          return;
-        }
-        res.sendStatus(403);
-      })
-  }
 
-  const register = (req, res) => {
-    userDao.findByUsername(req.body)
-      .then(user => {
-        if(user) {
-          res.sendStatus(404);
-          return;
-        }
-        userDao.createUser(req.body)
-          .then(user => {
-            req.session['profile'] = user;
-            res.json(user)
-          });
-      })
-  }
+    const updateUser = (req, res) =>
+        userDao.updateUser(req.params.id, req.body)
+            .then(status => res.send(status));
 
-  const profile = (req, res) =>
-    res.json(req.session['profile']);
+    const login = (req, res) => {
+        userDao.findByUsernameAndPassword(req.body)
+            .then(user => {
+                if(user) {
+                    req.session['profile'] = user;
+                    res.json(user);
+                    return;
+                }
+                res.sendStatus(403);
+            })
+    }
 
-  const logout = (req, res) =>
-    res.send(req.session.destroy());
+    const register = (req, res) => {
+        userDao.findByUsername(req.body)
+            .then(user => {
+                if(user) {
+                    res.sendStatus(404);
+                    return;
+                }
+                userDao.createUser(req.body)
+                    .then(user => {
+                        req.session['profile'] = user;
+                        res.json(user)
+                    });
+            })
+    }
 
-  app.post('/api/login', login);
-  app.post('/api/register', register);
-  app.post('/api/profile', profile);
-  app.post('/api/logout', logout);
-  app.put('/api/users', updateUser);
-  app.delete('/api/users/:userId', deleteUser);
-  app.get('/api/users', findAllUsers);
+    const profile = (req, res) =>
+        res.json(req.session['profile']);
 
-  app.get('/api/users/:id', findUserById);
+    const logout = (req, res) =>
+        res.send(req.session.destroy());
+
+
+    app.post('/api/login', login);
+    app.post('/api/register', register);
+    app.post('/api/profile', profile);
+    app.post('/api/logout', logout);
+    app.put('/api/users/:id', updateUser);
+    app.delete('/api/users/:userId', deleteUser);
+    app.get('/api/users', findAllUsers);
+
 };

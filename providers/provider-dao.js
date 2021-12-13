@@ -1,30 +1,29 @@
 const providerModel = require('./provider-model');
 
-const findAllUsers = () =>
+const findAllProviders = () =>
     providerModel.find({verified: false});
 
-const findUserById = (userId) =>
-    providerModel.findById(userId);
+const findProviderById = (id) =>
+    providerModel.findById(id);
 
-const findByUsernameAndPassword = ({username, password}) =>
-    providerModel.findOne({username, password});
 
-const findByUsername = ({username}) =>
-    providerModel.findOne({username});
+const findByUsernameAndPassword = ({email, password}) =>
+    providerModel.findOne({email, password});
 
-const createUser = (user) =>
-    providerModel.create(user);
+const findByUsername = ({email}) =>
+    providerModel.findOne({email});
 
-const updateUser = (user) =>
-    providerModel.updateOne({_id: user._id}, {
-        $set: user
+const createProvider = (provider) =>
+    providerModel.create(provider);
+
+const updateProvider = (id, provider) =>
+    providerModel.updateOne({_id: id}, {
+        $set: provider
     });
 
-const deleteUser = (userId) =>
-    providerModel.deleteOne({_id: userId});
 
 module.exports = {
-    findByUsername, findAllUsers, findUserById,
+    findByUsername, findAllProviders, findProviderById,
     findByUsernameAndPassword,
-    createUser, updateUser, deleteUser
+    createProvider, updateProvider
 };
