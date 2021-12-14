@@ -10,7 +10,7 @@ const deletePost = (id) =>
 
 const updatePost = (id, post) =>
     model.updateOne({_id: id},
-                    {$set: {stats: post.stats, liked: post.liked}});
+                    {$set: {likes: post.likes}});
 
 module.exports = {
     findAllPosts, createPost,
