@@ -1,4 +1,6 @@
 const providerDao = require('./provider-dao');
+const bcrypt = require("bcrypt");
+const Provider = require("./provider-model")
 
 module.exports = (app) => {
     const findAllProviders = (req, res) =>
@@ -28,9 +30,10 @@ module.exports = (app) => {
     }
 
     const register = (req, res) => {
+        const body = req.body;
         providerDao.findByUsername(req.body)
-            .then(provider => {
-                if(provider) {
+            .then(async provider => {
+                if (provider) {
                     res.sendStatus(404);
                     return;
                 }
@@ -39,9 +42,13 @@ module.exports = (app) => {
                         req.session['profile'] = user;
                         res.json(user)
                     });
+                const provide = new Provider(body);
+                const salt = await bcrypt.genSalt(10);
+                // now we set user password to hashed password
+                provide.password = await bcrypt.hash(provide.password, salt);
+                provide.save().then((doc) => res.status(201).send(doc));
             })
     }
-
     const profile = (req, res) =>
         res.json(req.session['profile']);
 
