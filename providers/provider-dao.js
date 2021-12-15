@@ -23,7 +23,10 @@ const updateProvider = (id, provider) =>
 
 
 module.exports = {
-    findByUsername, findAllProviders, findProviderById,
+    findByUsername,
+    findAllProviders,
+    findProviderById,
     findByUsernameAndPassword,
-    createProvider, updateProvider
+    createProvider,
+    updateProvider
 };

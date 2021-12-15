@@ -1,20 +1,21 @@
 {
-  "name": "mern-login-server",
+  "name": "web-dev-project-node",
   "version": "1.0.0",
-  "description": "Register, login example",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Jose Annunziato",
+  "author": "Nishtha Goswami",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.19.1",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
-    "mongoose": "^6.0.14"
-  },
-  "devDependencies": {
-    "bcrypt": "^5.0.1"
+    "mongoose": "^6.1.1",
+    "multer": "^1.4.4",
+    "uuid": "^8.3.2"
   }
 }
