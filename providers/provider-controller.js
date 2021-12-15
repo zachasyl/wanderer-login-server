@@ -2,30 +2,32 @@ const providerDao = require("./provider-dao");
 const bcrypt = require("bcrypt");
 const Provider = require("./provider-model");
 
-
 module.exports = (app) => {
   const findAllProviders = (req, res) =>
-    providerDao.findAllProviders().then((providers) => res.json(providers));
+      providerDao.findAllProviders()
+          .then(providers => res.json(providers));
 
   const findProviderById = (req, res) =>
-    providerDao.findProviderById(req.params.id).then((user) => res.json(user));
+      providerDao.findProviderById(req.params.id)
+          .then(user => res.json(user));
   app.get("/api/providers/:id", findProviderById);
 
+
   const updateProvider = (req, res) =>
-    providerDao
-      .updateProvider(req.params.id, req.body)
-      .then((status) => res.send(status));
+      providerDao.updateProvider(req.params.id, req.body)
+          .then(status => res.send(status));
 
   const login = (req, res) => {
-    providerDao.findByUsernameAndPassword(req.body).then((provider) => {
-      if (provider) {
-        req.session["profile"] = provider;
-        res.json(provider);
-        return;
-      }
-      res.sendStatus(403);
-    });
-  };
+    providerDao.findByUsernameAndPassword(req.body)
+        .then(provider => {
+          if(provider) {
+            req.session['profile'] = provider;
+            res.json(provider);
+            return;
+          }
+          res.sendStatus(403);
+        })
+  }
 
   const register = (req, res) => {
     const body = req.body;
@@ -73,3 +75,4 @@ module.exports = (app) => {
   app.put("/api/providers/:id", updateProvider);
 
 };
+
