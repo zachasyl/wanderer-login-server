@@ -25,6 +25,7 @@ module.exports = (app) => {
 
   const login = (req, res) => {
     console.log(req.body);
+
     userDao.findByUsernameAndPassword(req.body).then((user) => {
       if (user) {
         req.session["profile"] = user;

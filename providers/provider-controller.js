@@ -48,8 +48,8 @@ module.exports = (app) => {
 
   const register = (req, res) => {
     const body = req.body;
-    providerDao.findByUsername(req.body).then(async (provider) => {
 
+    providerDao.findByUsername(req.body).then(async (provider) => {
       if (provider) {
         res.sendStatus(404);
         return;
@@ -90,7 +90,4 @@ module.exports = (app) => {
   app.get("/api/providers", findAllProviders);
   app.get("/api/providers/:id", findProviderById);
   app.put("/api/providers/:id", updateProvider);
-
 };
-
-
