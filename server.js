@@ -1,13 +1,3 @@
-const mongoose = require("mongoose");
-mongoose.connect(
-  "mongodb+srv://web-dev:wandererproject@cluster0.1zdau.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-);
-
-const connection = mongoose.connection;
-connection.once("open", () => {
-  console.log("mongo DB success");
-});
-
 const express = require("express");
 const cors = require("cors");
 
@@ -29,7 +19,6 @@ app.use(cors);
 //   next();
 // });
 
-
 const session = require("express-session");
 app.use(
   session({
@@ -37,6 +26,16 @@ app.use(
     cookie: {},
   })
 );
+
+const mongoose = require("mongoose");
+mongoose.connect(
+  "mongodb+srv://web-dev:wandererproject@cluster0.1zdau.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+);
+
+const connection = mongoose.connection;
+connection.once("open", () => {
+  console.log("mongo DB success");
+});
 
 require("./providers/provider-controller")(app);
 require("./services/post-service")(app);
