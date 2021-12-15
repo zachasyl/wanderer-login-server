@@ -48,6 +48,7 @@ module.exports = (app) => {
   };
 
   const registration = (req, res) => {
+    console.log(req.body);
     providerDao.createProvider(req.body).then((user) => {
       req.session["profile"] = user;
       res.json(user);
