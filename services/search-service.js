@@ -1,5 +1,5 @@
 // let posts = require("../data/posts.json");
-const post_dao = require("../posts/posts-dao");
+const post_dao = require("../posts/post-dao");
 
 module.exports = (app) => {
   const findPosts = (req, res) => {

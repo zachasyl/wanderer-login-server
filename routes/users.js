@@ -34,7 +34,6 @@ router.route("/add").post(
   ]),
 
   async (req, res) => {
-
     const role = req.body.role;
     const name = req.body.name;
     const birthdate = req.body.birthdate;
@@ -51,7 +50,6 @@ router.route("/add").post(
 
     console.log(salt);
     const passwordHash = await bcrypt.hash(password, salt);
-
 
     const newUserData = {
       role,
