@@ -8,8 +8,10 @@ module.exports = (app) => {
     const findUserById = (req, res) =>
         userDao.findUserById(req.params.id)
             .then(user => res.json(user));
-    app.get("/api/users/:id", findUserById);
 
+    const findUserByEmail = (req, res) =>
+        userDao.findByUsername(req.params.email)
+            .then(user => res.json(user));
 
     const deleteUser = (req, res) =>
         userDao.deleteUser(req.params.userId)
@@ -18,6 +20,10 @@ module.exports = (app) => {
 
     const updateUser = (req, res) =>
         userDao.updateUser(req.params.id, req.body)
+            .then(status => res.send(status));
+
+    const updateUserByEmail = (req, res) =>
+        userDao.updateUserByEmail(req.params.id, req.body)
             .then(status => res.send(status));
 
     const login = (req, res) => {
@@ -58,8 +64,12 @@ module.exports = (app) => {
     app.post('/api/register', register);
     app.post('/api/profile', profile);
     app.post('/api/logout', logout);
+    app.put('/api/users/:email', updateUserByEmail);
     app.put('/api/users/:id', updateUser);
     app.delete('/api/users/:userId', deleteUser);
     app.get('/api/users', findAllUsers);
+    app.get('/api/users/:email', findUserByEmail);
+    app.get("/api/user/:id", findUserById);
+
 
 };
