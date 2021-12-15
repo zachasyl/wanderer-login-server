@@ -8,6 +8,7 @@ const schema = mongoose.Schema({
                                    longitude: Number,
                                    createdAt: Date,
                                    updatedAt: Date,
+                                   location: String
                                }, {timestamps: true, collection: 'posts'});
 module.exports = schema;
 
