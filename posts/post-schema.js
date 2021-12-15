@@ -11,4 +11,3 @@ const schema = mongoose.Schema({
                                    location: String
                                }, {timestamps: true, collection: 'posts'});
 module.exports = schema;
-

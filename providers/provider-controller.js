@@ -62,5 +62,4 @@ module.exports = (app) => {
     app.get('/api/providers', findAllProviders);
     app.get('/api/providers/:id', findProviderById);
     app.put('/api/providers/:id', updateProvider);
-
 };
