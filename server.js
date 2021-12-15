@@ -25,6 +25,9 @@ app.use(function (req, res, next) {
   next();
 });
 
+const bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 const session = require("express-session");
 app.use(
   session({
@@ -32,6 +35,11 @@ app.use(
     cookie: {},
   })
 );
+
+const connection = mongoose.connection;
+connection.once("open", () => {
+  console.log("mongo DB success");
+});
 
 require("./providers/provider-controller")(app);
 require("./services/post-service")(app);

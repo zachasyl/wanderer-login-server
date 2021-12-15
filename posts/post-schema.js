@@ -10,4 +10,5 @@ const schema = mongoose.Schema({
                                    updatedAt: Date,
                                    location: String
                                }, {timestamps: true, collection: 'posts'});
+
 module.exports = schema;
