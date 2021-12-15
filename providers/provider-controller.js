@@ -2,15 +2,13 @@ const providerDao = require("./provider-dao");
 const bcrypt = require("bcrypt");
 const Provider = require("./provider-model");
 
+
 module.exports = (app) => {
   const findAllProviders = (req, res) =>
     providerDao.findAllProviders().then((providers) => res.json(providers));
 
-  const findProviderById = (req, res) => {
-    console.log(req.params.id);
+  const findProviderById = (req, res) =>
     providerDao.findProviderById(req.params.id).then((user) => res.json(user));
-  };
-
   app.get("/api/providers/:id", findProviderById);
 
   const updateProvider = (req, res) =>
@@ -32,6 +30,7 @@ module.exports = (app) => {
   const register = (req, res) => {
     const body = req.body;
     providerDao.findByUsername(req.body).then(async (provider) => {
+
       if (provider) {
         res.sendStatus(404);
         return;
@@ -47,6 +46,14 @@ module.exports = (app) => {
       provide.save().then((doc) => res.status(201).send(doc));
     });
   };
+
+  const registration = (req, res) => {
+    providerDao.createProvider(req.body).then((user) => {
+      req.session["profile"] = user;
+      res.json(user);
+    });
+  };
+
   const profile = (req, res) => res.json(req.session["profile"]);
 
   const logout = (req, res) => res.send(req.session.destroy());
@@ -55,6 +62,7 @@ module.exports = (app) => {
     providerDao.createProvider(req.body).then((r) => res.json(r));
 
   app.post("/api/registration", providerRegistration);
+
   app.post("/api/login", login);
   app.post("/api/register2", register);
   app.post("/api/profile", profile);

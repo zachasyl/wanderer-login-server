@@ -5,6 +5,7 @@ const providerSchema = mongoose.Schema(
     address: String,
     contact: String,
     cardNumber: Number,
+
     verified: { type: Boolean, defaultValue: false },
   },
   { collection: "providers" }
