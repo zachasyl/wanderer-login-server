@@ -64,6 +64,4 @@ module.exports = (app) => {
   app.get("/api/users", findAllUsers);
   app.get("/api/users/:email", findUserByEmail);
   app.get("/api/user/:id", findUserById);
-
-  // app.post("/api/registration",);
 };

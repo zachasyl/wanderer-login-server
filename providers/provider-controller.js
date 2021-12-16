@@ -92,5 +92,3 @@ module.exports = (app) => {
   app.put("/api/providers/:id", updateProvider);
 
 };
-
-
