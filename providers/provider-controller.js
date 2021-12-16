@@ -49,7 +49,6 @@ module.exports = (app) => {
   const register = (req, res) => {
     const body = req.body;
     providerDao.findByUsername(req.body).then(async (provider) => {
-
       if (provider) {
         res.sendStatus(404);
         return;

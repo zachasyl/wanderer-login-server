@@ -19,7 +19,7 @@ module.exports = (app) => {
     admin_dao.rejectProvider(req.params.id).then((status) => res.send(status));
   };
 
-  app.get('/api/provider/unverified', findAllUnVerifiedProviders);
+  // app.get('/api/provider/unverified', findAllUnVerifiedProviders);
   app.get("/api/provider", getAllProviders);
   app.put("/api/provider/:id", updateProvider);
   app.delete("/api/provider/:id", deleteProvider);
