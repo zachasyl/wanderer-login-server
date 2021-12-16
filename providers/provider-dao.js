@@ -1,5 +1,5 @@
 const providerModel = require('./provider-model');
-const model = require("./post-model");
+const model = require("./provider-model");
 
 const findAllProviders = () =>
     providerModel.find({verified: false});
