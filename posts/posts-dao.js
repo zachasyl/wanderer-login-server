@@ -13,6 +13,7 @@ const findPostsByCoords = (coords) =>
                    $and: [{latitude: coords.latitude}, {longitude: coords.longitude}],
                });
 
+
 module.exports = {
     findAllPosts,
     createPost,
