@@ -45,7 +45,7 @@ router.route("/add").post(
 
     console.log("Password: ", password);
 
-    const salt = await bcrypt.genSalt();
+    const salt = await bcrypt.genSalt(12);
 
     console.log(salt);
     const passwordHash = await bcrypt.hash(password, salt);
@@ -71,7 +71,7 @@ router.route("/add").post(
   }
 );
 
-router.post("/login", async (req, res) => {
+router.post("/login", upload.none(), async (req, res) => {
   try {
     console.log(req.body);
     const { email, password } = req.body;
@@ -92,12 +92,12 @@ router.post("/login", async (req, res) => {
     }
 
     const token = jwt.sign({ id: user._id }, "MYSECRET", { expiresIn: "1h" });
-    console.log(user);
+    // console.log(user);
 
     res.json({
       token,
       resUser: {
-        id: user._id,
+        _id: user._id,
         firstName: user.firstName,
         lastName: user.lastName,
       },
