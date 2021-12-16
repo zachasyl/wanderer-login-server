@@ -45,12 +45,10 @@ router.route("/add").post(
     const description = req.body.description;
 
     console.log("Password: ", password);
-
     const salt = await bcrypt.genSalt(12);
 
     console.log(salt);
     const passwordHash = await bcrypt.hash(password, salt);
-
     const newUserData = {
       role,
       firstName: name,

@@ -13,6 +13,8 @@ module.exports = (app) => {
 
   const getAllProviders = (req, res) => {
     admin_dao.findAllProviders().then((providers) => res.json(providers));
+  };
+
 
     const deleteProvider = (req, res) => {
       admin_dao.rejectProvider(req.params.id).then((status) => res.send(status));
@@ -22,8 +24,6 @@ module.exports = (app) => {
     app.get("/api/provider", getAllProviders);
     app.put("/api/provider/:id", updateProvider);
     app.delete("/api/provider/:id", deleteProvider);
-
-  }
 
 };
 // Need to decide what to return to the client side
