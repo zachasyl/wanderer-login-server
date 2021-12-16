@@ -1,4 +1,7 @@
 const router = require("express").Router();
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+
 const multer = require("multer");
 const { v4: uuidv4 } = require("uuid");
 let path = require("path");
@@ -29,7 +32,7 @@ router.route("/add").post(
     { name: "photo", maxCount: 1 },
     { name: "cover", maxCount: 1 },
   ]),
-  (req, res) => {
+  async (req, res) => {
     const role = req.body.role;
     const name = req.body.name;
     const birthdate = req.body.birthdate;
@@ -40,6 +43,13 @@ router.route("/add").post(
     const email = req.body.email;
     const description = req.body.description;
 
+    console.log("Password: ", password);
+
+    const salt = await bcrypt.genSalt();
+
+    console.log(salt);
+    const passwordHash = await bcrypt.hash(password, salt);
+
     const newUserData = {
       role,
       firstName: name,
@@ -47,8 +57,8 @@ router.route("/add").post(
       cover_pic: cover,
       email,
       description,
-      password,
-      DOB: birthdate,
+      password: passwordHash,
+      dateOfBirth: birthdate,
       profile_pic: photo,
     };
 
@@ -60,5 +70,41 @@ router.route("/add").post(
       .catch((err) => res.status(400).json("Error: " + err));
   }
 );
+
+router.post("/login", async (req, res) => {
+  try {
+    console.log(req.body);
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ msg: "Please enter all the fields" });
+    }
+
+    const user = await User.findOne({ email: email });
+
+    if (!user) {
+      return res.status(400).json({ msg: "Invalid credentials" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ msg: "Invalid credentials" });
+    }
+
+    const token = jwt.sign({ id: user._id }, "MYSECRET", { expiresIn: "1h" });
+    console.log(user);
+
+    res.json({
+      token,
+      resUser: {
+        id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ err: error.message });
+  }
+});
 
 module.exports = router;
