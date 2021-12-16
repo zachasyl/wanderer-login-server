@@ -1,4 +1,5 @@
 const providerModel = require('./provider-model');
+const model = require("./provider-model");
 
 const findAllProviders = () =>
     providerModel.find({verified: false});
@@ -21,6 +22,13 @@ const updateProvider = (id, provider) =>
         $set: provider
     });
 
+const updateProviderVerified = (id) =>
+    model.updateOne({ _id: id }, { $set: { verified: true } });
+
+const rejectProvider = (id) => model.deleteOne({ _id: id });
+
+const findAllUnVerifiedProviders = () => model.find({ verified: false });
+
 
 module.exports = {
     findByUsername,
@@ -28,5 +36,8 @@ module.exports = {
     findProviderById,
     findByUsernameAndPassword,
     createProvider,
-    updateProvider
+    updateProvider,
+    updateProviderVerified,
+    rejectProvider,
+    findAllUnVerifiedProviders
 };

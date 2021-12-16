@@ -32,6 +32,7 @@ router.route("/add").post(
     { name: "photo", maxCount: 1 },
     { name: "cover", maxCount: 1 },
   ]),
+
   async (req, res) => {
     const role = req.body.role;
     const name = req.body.name;
@@ -44,12 +45,10 @@ router.route("/add").post(
     const description = req.body.description;
 
     console.log("Password: ", password);
-
     const salt = await bcrypt.genSalt(12);
 
     console.log(salt);
     const passwordHash = await bcrypt.hash(password, salt);
-
     const newUserData = {
       role,
       firstName: name,
@@ -108,3 +107,4 @@ router.post("/login", upload.none(), async (req, res) => {
 });
 
 module.exports = router;
+
