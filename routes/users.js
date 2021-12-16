@@ -32,7 +32,6 @@ router.route("/add").post(
     { name: "photo", maxCount: 1 },
     { name: "cover", maxCount: 1 },
   ]),
-
   async (req, res) => {
     const role = req.body.role;
     const name = req.body.name;
@@ -44,11 +43,10 @@ router.route("/add").post(
     const email = req.body.email;
     const description = req.body.description;
 
-    console.log("Password: ", password);
     const salt = await bcrypt.genSalt(12);
 
-    console.log(salt);
     const passwordHash = await bcrypt.hash(password, salt);
+
     const newUserData = {
       role,
       firstName: name,
@@ -72,7 +70,6 @@ router.route("/add").post(
 
 router.post("/login", upload.none(), async (req, res) => {
   try {
-    console.log(req.body);
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -80,7 +77,7 @@ router.post("/login", upload.none(), async (req, res) => {
     }
 
     const user = await User.findOne({ email: email });
-
+    console.log(user);
     if (!user) {
       return res.status(400).json({ msg: "Invalid credentials" });
     }
@@ -107,4 +104,3 @@ router.post("/login", upload.none(), async (req, res) => {
 });
 
 module.exports = router;
-
