@@ -94,6 +94,7 @@ router.post("/login", upload.none(), async (req, res) => {
       token,
       resUser: {
         _id: user._id,
+        role: user.role,
         firstName: user.firstName,
         lastName: user.lastName,
       },

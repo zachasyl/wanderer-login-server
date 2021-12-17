@@ -2,4 +2,5 @@
 .idea
 package-lock.json
 wanderer-login-server.iml
+/images
 
