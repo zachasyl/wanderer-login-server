@@ -7,6 +7,8 @@ const findAllProviders = () =>
 const findProviderById = (id) =>
     providerModel.findById(id);
 
+const findProviderByUserId = (id) =>
+    providerModel.findOne({user_Id : id});
 
 const findByUsernameAndPassword = ({email, password}) =>
     providerModel.findOne({email, password});
@@ -34,6 +36,7 @@ module.exports = {
     findByUsername,
     findAllProviders,
     findProviderById,
+    findProviderByUserId,
     findByUsernameAndPassword,
     createProvider,
     updateProvider,

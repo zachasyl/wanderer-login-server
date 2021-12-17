@@ -13,6 +13,12 @@ module.exports = (app) => {
           .then(user => res.json(user));
   app.get("/api/providers/:id", findProviderById);
 
+  const findProviderByUserId = (req, res) =>
+      providerDao.findProviderByUserId(req.params.id)
+          .then(user => res.json(user));
+  app.get("/api/provider/:id", findProviderById);
+
+
     const updateProviderVerified = (req, res) => {
         admin_dao
             .updateProviderVerified(req.params.id)
@@ -89,6 +95,6 @@ module.exports = (app) => {
   app.post("/api/logout", logout);
   app.get("/api/providers", findAllProviders);
   app.get("/api/providers/:id", findProviderById);
-  app.put("/api/providers/:id", updateProvider);
+  app.put("/api/providers/:id", updateProvider);x
 
 };
