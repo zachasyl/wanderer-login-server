@@ -97,6 +97,7 @@ router.post("/login", upload.none(), async (req, res) => {
         role: user.role,
         firstName: user.firstName,
         lastName: user.lastName,
+        role: user.role
       },
     });
   } catch (error) {
