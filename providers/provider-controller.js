@@ -95,6 +95,6 @@ module.exports = (app) => {
   app.post("/api/logout", logout);
   app.get("/api/providers", findAllProviders);
   app.get("/api/providers/:id", findProviderById);
-  app.put("/api/providers/:id", updateProvider);x
+  app.put("/api/providers/:id", updateProvider);
 
 };
