@@ -1,7 +1,6 @@
 const providerDao = require("./provider-dao");
 const bcrypt = require("bcrypt");
 const Provider = require("./provider-model")
-const admin_dao = require("../providers/provider-dao");
 
 module.exports = (app) => {
   const findAllProviders = (req, res) =>
@@ -20,20 +19,21 @@ module.exports = (app) => {
 
 
     const updateProviderVerified = (req, res) => {
-        admin_dao
+      providerDao
             .updateProviderVerified(req.params.id)
             .then((status) => res.send(status));
     };
     app.put("/api/provider/:id", updateProviderVerified);
 
     const deleteProvider = (req, res) => {
-        admin_dao.rejectProvider(req.params.id).then((status) => res.send(status));
+      providerDao.rejectProvider(req.params.id).then((status) => res.send(status));
     };
     app.delete("/api/provider/:id", deleteProvider);
 
     const findAllUnVerifiedProviders = (req, res) =>
-        admin_dao.findAllUnVerifiedProviders()
+        providerDao.findAllUnVerifiedProviders()
             .then(providers => res.json(providers));
+
     app.get('/api/provider/unverified', findAllUnVerifiedProviders);
 
     const updateProvider = (req, res) =>
