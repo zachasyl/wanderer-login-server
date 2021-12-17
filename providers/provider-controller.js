@@ -16,7 +16,7 @@ module.exports = (app) => {
   const findProviderByUserId = (req, res) =>
       providerDao.findProviderByUserId(req.params.id)
           .then(user => res.json(user));
-  app.get("/api/provider/:id", findProviderById);
+  app.get("/api/provider/:id", findProviderByUserId);
 
 
     const updateProviderVerified = (req, res) => {

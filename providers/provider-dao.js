@@ -8,7 +8,7 @@ const findProviderById = (id) =>
     providerModel.findById(id);
 
 const findProviderByUserId = (id) =>
-    providerModel.findOne({user_Id : id});
+    providerModel.findOne({user_Id: id});
 
 const findByUsernameAndPassword = ({email, password}) =>
     providerModel.findOne({email, password});
